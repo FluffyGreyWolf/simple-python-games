@@ -1,5 +1,5 @@
 board_values = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',]
-# gittest
+# gittest2
 def clear_screen():
     print('\n'*100)
 
