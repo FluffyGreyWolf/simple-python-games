@@ -1,5 +1,6 @@
 board_values = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 game_on = True
+play_again_true_false = True
 symbol = 'a'
 
 def clear_screen():
@@ -25,25 +26,29 @@ def xo_decision():
 
 
 def choose_field():
-    position = int(input('Choose position of your symbol (from 1-9 starting at the bottom left): '))
     global  symbol
-    if position in range(1, 10):
-        if board_values[position - 1] == ' ':
-            for item in board_values:
-                board_values[position - 1] =  symbol.capitalize()
-                clear_screen()
-                game_board()
-        else:
-            print('This position is already taken!')
+    user_input = input('Choose position of your symbol (from 1-9 starting at the bottom left): ')
+    if user_input.isdigit():
+        position = int(user_input)
+        if position in range(1, 10):
+            if board_values[position - 1] == ' ':
+                for item in board_values:
+                    board_values[position - 1] =  symbol.capitalize()
+                    clear_screen()
+                    game_board()
+            else:
+                print('This position is already taken!')
 
-        if symbol.capitalize() == 'X':
-         symbol = 'O'
-        else:
-            symbol = 'X'
+            if symbol.capitalize() == 'X':
+                symbol = 'O'
+            else:
+                symbol = 'X'
 
-        print(f'Now is {symbol.capitalize()} turn!')
+            print(f'Now is {symbol.capitalize()} turn!')
+        else:
+            print('Wrong number!')
     else:
-        print('Wrong number!')
+        print('Thats not a digit!')
 
 def win_check_x():
     global  game_on
@@ -74,12 +79,32 @@ def tie_check():
     else:
         pass
 
+def play_again():
+    global play_again_true_false
+    global game_on
+    global board_values
+    global symbol
+    if game_on == False:
+        play_again_anwser = input('Do you want to play again? yes/no: ')
+        if play_again_anwser == 'y' or play_again_anwser == 'yes'or play_again_anwser == 'Yes' or play_again_anwser == 'YES':
+            game_on = True
+            board_values = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+            symbol = 'a'
+            game()
+        elif play_again_anwser == 'n' or play_again_anwser == 'no' or play_again_anwser == 'No' or play_again_anwser == 'NO':
+            play_again_true_false = False
+            return play_again_true_false
+        else:
+            print('Wrong anwser!')
+            play_again()
 
-xo_decision()
-while game_on:
-    choose_field()
-    win_check_x()
-    tie_check()
+def game():
+    xo_decision()
+    while game_on:
+        choose_field()
+        win_check_x()
+        tie_check()
+    while play_again_true_false:
+        play_again()
 
-
-
+game()
