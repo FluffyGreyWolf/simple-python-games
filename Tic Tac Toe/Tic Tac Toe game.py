@@ -1,4 +1,4 @@
-board_values = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',]
+board_values = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 game_on = True
 symbol = 'a'
 
@@ -20,29 +20,66 @@ def xo_decision():
             x = False
         else:
             print('Wrong symbol!')
+    print(f'Now is {symbol.capitalize()} turn!')
     return symbol
 
 
 def choose_field():
-    position = int(input('Choose position of your symbol (from 1-9 starting att the bottom left): '))
+    position = int(input('Choose position of your symbol (from 1-9 starting at the bottom left): '))
     global  symbol
-    if board_values[position - 1] == ' ':
-        for item in board_values:
-            board_values[position - 1] =  symbol.capitalize()
-            clear_screen()
-            game_board()
-            print(board_values)
-    else:
-        print('This position is already taken!')
+    if position in range(1, 10):
+        if board_values[position - 1] == ' ':
+            for item in board_values:
+                board_values[position - 1] =  symbol.capitalize()
+                clear_screen()
+                game_board()
+        else:
+            print('This position is already taken!')
 
-    if symbol.capitalize() == 'X':
-        symbol = 'O'
+        if symbol.capitalize() == 'X':
+         symbol = 'O'
+        else:
+            symbol = 'X'
+
+        print(f'Now is {symbol.capitalize()} turn!')
     else:
-        symbol = 'X'
+        print('Wrong number!')
+
+def win_check_x():
+    global  game_on
+    if (board_values[0] == 'X' and board_values[1] == 'X' and board_values[2] == 'X') or (board_values[3] == 'X' and board_values[4] == 'X' and board_values [5] == 'X') or (board_values[6] == 'X' and board_values[7] == 'X' and board_values[8] == 'X') or (board_values[0] == 'X' and board_values[3] == 'X' and board_values[6] == 'X') or (board_values[1] == 'X' and board_values[4] == 'X' and board_values[7] == 'X') or (board_values[2] == 'X' and board_values[5] == 'X' and board_values[8] == 'X'):
+        print('\nX WON!')
+        game_on = False
+        return game_on
+    elif (board_values[0] == 'O' and board_values[1] == 'O' and board_values[2] == 'O') or (board_values[3] == 'O' and board_values[4] == 'O' and board_values [5] == 'O') or (board_values[6] == 'O' and board_values[7] == 'O' and board_values[8] == 'O') or (board_values[0] == 'O' and board_values[3] == 'O' and board_values[6] == 'O') or (board_values[1] == 'O' and board_values[4] == 'O' and board_values[7] == 'O') or (board_values[2] == 'O' and board_values[5] == 'O' and board_values[8] == 'O'):
+        print('\nO WON!')
+        game_on = False
+        return game_on
+    else:
+        pass
+
+def tie_check():
+    global game_on
+    x = 0
+    if ' ' in board_values:
+        x += 1
+    else:
+        pass
+    if x == 0:
+        clear_screen()
+        game_board()
+        print('GAME OVER - TIE')
+        game_on = False
+        return game_on
+    else:
+        pass
 
 
 xo_decision()
 while game_on:
     choose_field()
+    win_check_x()
+    tie_check()
+
 
 
