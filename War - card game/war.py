@@ -15,7 +15,7 @@ class Card:
 
 class Deck:
 
-    def __init__(self, ):
+    def __init__(self):
 
         self.all_cards = []
 
@@ -30,6 +30,7 @@ class Deck:
         return self.all_cards.pop()
 
 class Player:
+
     def __init__(self, name):
 
         self.name = name
