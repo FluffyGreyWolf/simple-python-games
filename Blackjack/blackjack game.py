@@ -2,7 +2,7 @@ import random
 
 suits = ('Hearts', 'Diamonds', 'Spades', 'Clubs')
 ranks = ('Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King', 'Ace')
-values = {'Two':2, 'Three':3, 'Four':4, 'Five':5, 'Six':6, 'Seven':7, 'Eight':8, 'Nine':9, 'Ten':10, 'Jack':10, 'Queen':10, 'King':10, 'Ace':14}
+values = {'Two':2, 'Three':3, 'Four':4, 'Five':5, 'Six':6, 'Seven':7, 'Eight':8, 'Nine':9, 'Ten':10, 'Jack':10, 'Queen':10, 'King':10, 'Ace':11}
 
 class Card:
 
@@ -119,39 +119,51 @@ def game():
     bot_cards()
     player_cards()
     counting_values()
-    decision()
 
 while game_on:
 
     game()
-
+    decision()
 
     while decision_on:
         if x == '1':
             player_human.add_card(new_deck.deal_one())
             game()
+            if player_cards_value > 21:
+                print(f'Values of bot cards: {bot_cards_value}')
+                print(f'Values of player cards: {player_cards_value}\n')
+                print('Game over! You have over 21 points! Bot wins!')
+                game_on = False
+                break
+            else:
+                decision()
         else:
             decision_on = False
             break
 
     while not decision_on:
 
-        if bot_cards_value == 21:
+        if bot_cards_value == 21 and player_cards_value != 21:
             print(f'Values of bot cards: {bot_cards_value}')
-            print(f'Values of player cards: {player_cards_value}')
-            print('Bot wins!')
+            print(f'Values of player cards: {player_cards_value}\n')
+            print('Game over! Bot have 21 points! Bot wins!')
             break
-        elif bot_cards_value <= 21 and bot_cards_value >= player_cards_value:
+        elif bot_cards_value == 21 and player_cards_value == 21:
             print(f'Values of bot cards: {bot_cards_value}')
-            print(f'Values of player cards: {player_cards_value}')
-            print('Bot wins!')
+            print(f'Values of player cards: {player_cards_value}\n')
+            print('Game over! You bot have 21 points! Tie!')
+            break
+        elif bot_cards_value < 21 and bot_cards_value > player_cards_value:
+            print(f'Values of bot cards: {bot_cards_value}')
+            print(f'Values of player cards: {player_cards_value}\n')
+            print('Game over! Bot have more points than you! Bot wins!')
             break
         elif bot_cards_value > 21:
             print(f'Values of bot cards: {bot_cards_value}')
-            print(f'Values of player cards: {player_cards_value}')
-            print('Player wins!')
+            print(f'Values of player cards: {player_cards_value}\n')
+            print('Game over! Bot have over 21 points! You win!')
             break
-        elif bot_cards_value < 21 and bot_cards_value <= player_cards_value:
+        elif bot_cards_value < 21 and bot_cards_value < player_cards_value:
             player_bot.add_card(new_deck.deal_one())
             bot_cards()
             counting_values()
