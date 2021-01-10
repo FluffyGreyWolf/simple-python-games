@@ -77,7 +77,9 @@ def player_cards():
         print(i)
         value += i.values
 
-    print(f'Of value: {value}')
+    print(f'Of value: {value}\n')
+
+ace = False
 
 def counting_values():
 
@@ -92,6 +94,8 @@ def counting_values():
 
     for i in player_human.all_player_cards:
         player_cards_value += i.values
+    if ace == True:
+        player_cards_value -= 10
 
 x = 0
 decision_on = True
@@ -127,8 +131,21 @@ while game_on:
 
     while decision_on:
         if x == '1':
-            player_human.add_card(new_deck.deal_one())
-            game()
+            if new_deck.all_cards[-1].values == 11:
+                print('Choose card value: ')
+                print('1 - 1 point')
+                print('2 - 11 points')
+                y = input()
+                if y == '1':
+                    player_human.add_card(new_deck.deal_one())
+                    player_cards_value -= 10
+                    ace = True
+                    game()
+                else:
+                    print('Wrong number!')
+            else:
+                player_human.add_card(new_deck.deal_one())
+                game()
             if player_cards_value > 21:
                 print(f'Values of bot cards: {bot_cards_value}')
                 print(f'Values of player cards: {player_cards_value}\n')
@@ -168,8 +185,4 @@ while game_on:
             bot_cards()
             counting_values()
             continue
-
-
-
-
     break
