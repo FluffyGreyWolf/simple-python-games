@@ -59,7 +59,7 @@ player_bot.add_card(new_deck.deal_one())
 
 def bot_cards():
 
-    print('Bot cards: ')
+    print('\nBot cards: ')
     value = 0
 
     for i in player_bot.all_player_cards[:-1]:
@@ -70,7 +70,7 @@ def bot_cards():
 
 def player_cards():
 
-    print('Your cards: ')
+    print('\nYour cards: ')
     value = 0
 
     for i in player_human.all_player_cards:
@@ -83,6 +83,9 @@ def counting_values():
 
     global bot_cards_value
     global player_cards_value
+
+    player_cards_value = 0
+    bot_cards_value = 0
 
     for i in player_bot.all_player_cards:
         bot_cards_value += i.values
@@ -111,22 +114,25 @@ def decision():
                 return x
         else:
             print('Wrong number!')
-
-while game_on:
+def game():
     print('\n')
     bot_cards()
     player_cards()
     counting_values()
     decision()
+
+while game_on:
+
+    game()
+
+
     while decision_on:
         if x == '1':
             player_human.add_card(new_deck.deal_one())
-            bot_cards()
-            player_cards()
-            counting_values()
-            decision()
+            game()
         else:
             decision_on = False
+            break
 
     while not decision_on:
 
